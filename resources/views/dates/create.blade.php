@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Create Date</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('css/mystyle.css')}}">
+
 </head>
 
-<body>
+<body class="bodyStyle">
 <div class="container mt-2">
     <div class="row">
         <div class="col-lg-12 margin-tb">
