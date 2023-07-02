@@ -8,6 +8,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body style="margin-top: 10px">
+
+
+@if(Session::has('message'))
+    <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('message') }}</p>
+@endif
+
+
 <div class="container mt-2">
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -46,8 +53,8 @@
             <p>  Hour : {{$v['hour']}}</p>
             <p> Day : {{$v['day']}}</p>
 
-            <form action="{{ url('/editAttachTeacherToRoom/'.$v['room_id'].'/'.$key.'/'.$v['day'].'/'.$v['hour']) }}" method="Post" >
-                <a class="btn btn-success" href="{{ url('/editAttachTeacherToRoom/'.$v['room_id'].'/'.$key.'/'.$v['day'].'/'.$v['hour'])}}">Edit</a>
+            <form action="{{ url('/editAttachTeacherToRoom/'.$v['id']) }}" method="Post" >
+                <a class="btn btn-success" href="{{ url('/editAttachTeacherToRoom/'.$v['id']) }}">Edit</a>
                 @csrf
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('Are you sure Noreeee  😀 ???')" class="btn btn-danger">Delete</button>
@@ -63,44 +70,6 @@
 
 </div>
 
-<!-- Modal -->
-<form method="post" action="/attachTeacherToRoom">
-    @csrf
-<div id="myModal" class="modal " role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Edit Attach Teacher to Room</h4>
-            </div>
-            <div class="modal-body">
-                <p style="font-weight: bold">Room</p>
-                <select name="room_id" style="width: 100%; padding: 5px">
-                    <option  selected>----</option>
-                    @foreach($rooms as $room)
-                        <option  value="{{$room->id}}">{{$room->number}}</option>
-                    @endforeach
-                </select>
-                <p style="margin-top: 2px; margin-bottom: 2px;"><strong>Teacher</strong></p>
-                <select name="teacher_id" style="width: 100%;padding: 5px">
-                    <option selected>----</option>
-                    @foreach($teachers as $teacher)
-                        <option value="{{$teacher->id}}">{{$teacher->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-    <input type="hidden" name="teacherrommId" id="hiddenId">
-    <input type="hidden" name="oldroomId" id="hiddenoldroomId">
-    <input type="hidden" name="oldteacherId" id="hiddenoldteacherId">
-</form>
 
 <form method="post" action="/attachTeacherToRoomCreate">
     @csrf
@@ -126,13 +95,24 @@
                             <option value="{{$teacher->id}}">{{$teacher->name}}</option>
                         @endforeach
                     </select>
-                    <label> Hour
-                        <input type="text" class="input-group" name="hour" />
-                    </label>
-
-                    <label> day
-                        <input type="text" class="input-group" name="day" />
-                    </label>
+                    <p> Hour
+                        <select name="hour" style="width: 100%;padding: 5px">
+                            <option selected>----</option>
+                            @foreach($hours as $hour)
+                                <option value="{{$hour->hour}}">{{$hour->hour}}</option>
+                        @endforeach
+                        </select>
+                    </p>
+                    <p></p>
+                    <p>
+                        day
+                        <select name="day" style="width: 100%;padding: 5px">
+                            <option selected>----</option>
+                            @foreach($days as $day)
+                                <option value="{{$day->date}}">{{$day->date}}</option>
+                            @endforeach
+                        </select>
+                    </p>
 
                 </div>
                 <div class="modal-footer">

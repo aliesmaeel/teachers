@@ -29,7 +29,7 @@
             {{ session('status') }}
         </div>
     @endif
-    <form action="{{ url('/editAttachTeacherToRoom/'.$teacherInRoom->room_id.'/'.$teacherInRoom->teacher_id.'/'.$teacherInRoom->day.'/'.$teacherInRoom->hour) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/editAttachTeacherToRoom/'.$teacherInRoom->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -48,13 +48,26 @@
                                     <option @if($teacher->id ===$teacherInRoom->teacher_id) selected @endif value="{{$teacher->id}}">{{$teacher->name}}</option>
                                 @endforeach
                             </select>
-                            <label> Hour
-                                <input type="text" class="input-group" value="{{$teacherInRoom->hour}}" name="hour" />
-                            </label>
+                            <p> Hour
 
-                            <label> day
-                                <input type="text" class="input-group" value="{{$teacherInRoom->day}}" name="day" />
-                            </label>
+                                <select name="hour" style="width: 100%;padding: 5px">
+                                    @foreach($hours as $hour)
+                                        <option
+                                            @if($hour->hour== $teacherInRoom->hour)
+                                            selected @endif value="{{$hour->hour}}">{{$hour->hour}}</option>
+                                    @endforeach
+                                </select>
+
+                            </p>
+
+                            <p> day
+                                <select name="day" style="width: 100%;padding: 5px">
+                                    @foreach($days as $day)
+                                        <option
+                                            @if($day->date== $teacherInRoom->day) selected @endif   value="{{$day->date}}">{{$day->date}}</option>
+                                    @endforeach
+                                </select>
+                            </p>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary ml-3">Submit</button>
